@@ -83,21 +83,32 @@ class line:
             self.j1 = 1.0; self.j2 = 1.0; self.g1 = 1.50; self.g2 = 2.0; self.cw = 5172.6843
         elif(cw == 5896):
             self.j1 = 0.5; self.j2 = 0.5; self.g1 = 2.00; self.g2 = 2.0/3.0; self.cw = 5895.9242
+        elif (cw == 8662):
+            self.j1=0.5; self.j2=1.5; self.g1=0.67; self.g2=0.8; self.cw=8662.14
+        elif (cw == 8661):
+            self.j1=2; self.j2=1; self.g1=1.5; self.g2=1.5; self.cw=8661.8994
+        elif (cw == 6562):
+            pass
         else:
             print("line::init: ERROR, line not implemented")
             self.j1 = 0.0; self.j2 = 0.0; self.g1 = 0.0; self.g2 = 0.0; self.cw = 0.0
             return
 
-        j1 = self.j1; j2 = self.j2; g1 = self.g1; g2 = self.g2
-        
-        d = j1 * (j1 + 1.0) - j2 * (j2 + 1.0);
-        self.geff = 0.5 * (g1 + g2) + 0.25 * (g1 - g2) * d;
-        ss = j1 * (j1 + 1.0) + j2 * (j2 + 1.0);
-        dd = j1 * (j1 + 1.0) - j2 * (j2 + 1.0);
-        gd = g1 - g2;
-        self.Gg = (self.geff * self.geff) - (0.0125  * gd * gd * (16.0 * ss - 7.0 * dd * dd - 4.0));
+        if cw != 6562:
+            j1 = self.j1; j2 = self.j2; g1 = self.g1; g2 = self.g2
 
-        print("line::init: cw={0}, geff={1}, Gg={2}".format(self.cw, self.geff, self.Gg))
+            d = j1 * (j1 + 1.0) - j2 * (j2 + 1.0);
+            self.geff = 0.5 * (g1 + g2) + 0.25 * (g1 - g2) * d;
+            ss = j1 * (j1 + 1.0) + j2 * (j2 + 1.0);
+            dd = j1 * (j1 + 1.0) - j2 * (j2 + 1.0);
+            gd = g1 - g2;
+            self.Gg = (self.geff * self.geff) - (0.0125  * gd * gd * (16.0 * ss - 7.0 * dd * dd - 4.0));
+        else:
+            self.geff = 1.048
+            self.Gg = 1.048
+            self.cw = 6562.8
+
+        # print("line::init: cw={0}, geff={1}, Gg={2}".format(self.cw, self.geff, self.Gg))
 
       
 # *********************************************************************************************** #
